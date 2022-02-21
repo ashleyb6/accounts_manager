@@ -26,7 +26,6 @@ extern int debug;
 
 int addRecord (struct record ** startAddress, int accountNum, char uname[], char uaddress[])
 {
-
     int success;
     struct record *new, *cursor, *precursor;
 
@@ -39,63 +38,41 @@ int addRecord (struct record ** startAddress, int accountNum, char uname[], char
 
     if (debug == 1)
     {
-
         printf("\n----------*DEBUG* In addRecord function, params: startAddress(%p), accountNum(%d), uname(%s), uaddress(%s)----------\n", (void*)startAddress, accountNum, uname, uaddress);
-
     }
 
     if( *startAddress == 0 )
     {
-
         *startAddress = new;
-
         success = 0;
-
     }
-
     else if( new->accountno < (*startAddress)->accountno )
     {
-
         new->next = *startAddress;
         *startAddress = new;
         success = 0;
-
     }
-
     else
     {
-  
         cursor = *startAddress;
     
         while( (cursor != 0) && (new->accountno > cursor->accountno) )
         {
-
             precursor = cursor;
-
             cursor = cursor->next;
-
         }
-
+        
         if( (cursor != 0) && (new->accountno == cursor->accountno) )
         {
-
             free(new);
-
             success = -1;
-
         }
-
         else
         {
-
             new->next = cursor;
-
             precursor->next = new;
-
             success = 0;
-
         }
-
     }
 
     new = NULL;
@@ -119,7 +96,6 @@ int addRecord (struct record ** startAddress, int accountNum, char uname[], char
 
 void printAllRecords (struct record * start)
 {
-
     int count;
     struct record *cursor;
 
@@ -128,28 +104,20 @@ void printAllRecords (struct record * start)
 
     if ( debug == 1 )
     {
-
         printf("\n----------*DEBUG* In printAllRecords function, params: start(%p)----------\n", (void*)start);
-
     }
 
     if( cursor == 0 )
     {
-
         printf("\nThere are no records on file.\n");
-
     }
-
     else
     {
-
         printf("\nALL RECORDS ON FILE.....\n");
-
     }
 
     while( cursor != NULL )
     {
-
         printf("\n->Record for Client %d:\n", count);
         printf("\nAccount Number: %d\n", cursor->accountno);
         printf("Name: %s\n", cursor->name);
@@ -157,9 +125,7 @@ void printAllRecords (struct record * start)
 
         count = count + 1;
         cursor = cursor->next;
-
     }
-
 }
 
 /*****************************************************************
@@ -178,7 +144,6 @@ void printAllRecords (struct record * start)
 
 int findRecord (struct record * start, int accountNum)
 {
-
     int success;
     struct record *cursor;
 
@@ -187,17 +152,13 @@ int findRecord (struct record * start, int accountNum)
 
     if ( debug == 1 )
     {
-
         printf("\n----------*DEBUG* In findRecord function, params: start(%p), accountNum(%d)----------\n", (void*)start, accountNum);
-
     }
 
     while( cursor != 0 )
     {
-
         if( accountNum == cursor->accountno )
         {
-
             printf("\nRECORD FOUND..\n");
             printf("\nAccount Number: %d\n", cursor->accountno);
             printf("Name: %s\n", cursor->name);
@@ -205,18 +166,12 @@ int findRecord (struct record * start, int accountNum)
 
             cursor = NULL;
             success = 0;
-
         }
-
         else
         {
-
             cursor = cursor->next;
-
         }
-
     }
-
     return success;
 }
 
@@ -237,7 +192,6 @@ int findRecord (struct record * start, int accountNum)
 
 int deleteRecord(struct record ** startAddress, int accountNum)
 {
-
     int success;
     struct record *cursor, *precursor, *successor;
 
@@ -247,30 +201,22 @@ int deleteRecord(struct record ** startAddress, int accountNum)
 
     if ( debug == 1 )
     {
-
         printf("\n----------*DEBUG* In deleteRecord function, params: startAddress(%p), accountNum(%d)---------\n", (void*)startAddress, accountNum);
-
     }
 
     while( (cursor != 0) && (accountNum != cursor->accountno) )
     {
-
         precursor = cursor;
         cursor = cursor->next;
-
     }
 
     if( cursor == 0 )
     {
-
         precursor = NULL;
         success = -1;
-
     }
-
     else if( cursor == *startAddress )
     {
-
         cursor = cursor->next;
 
         free(*startAddress);
@@ -278,12 +224,9 @@ int deleteRecord(struct record ** startAddress, int accountNum)
         *startAddress = cursor;
         cursor = NULL;
         success = 0;
-
     }
-
     else
     {
-
         successor = cursor->next;
         precursor->next = successor;
 
@@ -293,9 +236,7 @@ int deleteRecord(struct record ** startAddress, int accountNum)
         precursor = NULL;
         successor = NULL;
         success = 0;
-
     }
-
     return success;
 }
 
@@ -316,7 +257,6 @@ int deleteRecord(struct record ** startAddress, int accountNum)
 
 int readfile(struct record ** startAddress, char file[])
 {
-
     int success, accountNum;
     char uname[25], uaddress[50];
     FILE * read;
@@ -324,55 +264,37 @@ int readfile(struct record ** startAddress, char file[])
 
     if( debug == 1 )
     {
-
         printf("\n----------*DEBUG* In readfile function, params: startAddress(%p), file(%s)----------\n", (void*)startAddress, file);
- 
     }
 
     read = fopen(file, "r");
 
     if( read == NULL )
     {
-
         success = -1;
-
     }
-
     else
     {
-
         while( feof(read) == 0 )
         {        
-
             fscanf(read, "%d", &accountNum);
-
             fgets(trash, 80, read);
-
+            
             fgets(uname, 25, read);
-
             uname[strlen(uname)-1] = '\0';
  
             getaddressfromfile(uaddress, 50, read);
-
             uaddress[strlen(uaddress)-1] = '\0';
 
             if( feof(read) == 0 )
             {
-
                 addRecord(startAddress, accountNum, uname, uaddress);
-     
             }
-
         }       
-
         fclose(read);
-
         success = 0;
-
     }
-
     return success;
-
 }
 
 /*****************************************************************
@@ -391,35 +313,26 @@ int readfile(struct record ** startAddress, char file[])
 
 int writefile(struct record * start, char file[])
 {
-
     int success;
     FILE * write;
     struct record * cursor;
 
     if( debug == 1 )
     {
-
         printf("\n----------*DEBUG* In writefile function, params: start(%p), file(%s)----------\n", (void*)start, file);
-
     }
 
     cursor = start;
-
     write = fopen(file, "w");
 
     if( write == NULL )
     {
-
         success = -1;
-
     }
-
     else
     {
-
         while( cursor != NULL )
         {
-
             (cursor->address)[strlen(cursor->address)] = '!';            
 
             fprintf(write, "%d\n", cursor->accountno);
@@ -427,16 +340,11 @@ int writefile(struct record * start, char file[])
             fprintf(write, "%s\n", cursor->address);
 
             cursor = cursor->next;
-
         }
-
         success = 0;
         fclose(write);
-
     }
-
     return success;
-
 }
 
 /*****************************************************************
@@ -454,31 +362,21 @@ int writefile(struct record * start, char file[])
 
 void cleanup(struct record ** startAddress)
 {
-
     struct record * cursor;
-  
     cursor = *startAddress;
 
     if( debug == 1 )
     {
-
          printf("\n----------*DEBUG* In cleanup function, params: startAddress(%p)----------\n", (void*)startAddress);
-
     }
 
     while( cursor != 0 )
     {
-
-        cursor = cursor->next;
-        
+        cursor = cursor->next;   
         free(*startAddress);
-
         *startAddress = cursor;
-
     }
-
     return;
-
 }
 
 /*****************************************************************
@@ -498,7 +396,6 @@ void cleanup(struct record ** startAddress)
 
 void getaddressfromfile(char address[], int size, FILE * readFrom)
 {
-
     int i;
     char c;
 
@@ -506,24 +403,18 @@ void getaddressfromfile(char address[], int size, FILE * readFrom)
 
     if (debug == 1)
     {
-
         printf("\n----------*DEBUG* In getaddressfromfile function, params: address(%s), size(%d), readFrom(%p)----------\n", address, size, (void*)readFrom);
-
     }
 
     while((c != '!') && (i < size-1))
     {
-
         c = fgetc(readFrom);
-
         address[i] = c;
-
         i = i + 1;
     }
 
     address[i] = '\0';
 
     return;
-
 }
 
