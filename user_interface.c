@@ -1,25 +1,3 @@
-/**************************************************************
-//
-//    Name:        Ashley Burnett
-//
-//    Homework:    Project1
-//
-//    Class:       ICS 212
-//
-//    Instructor:  Ravi Narayan
-//
-//    Date:        February 8, 2021
-//
-//    File:        user_interface.c
-//
-//    Description:
-//       Program models software to be used in a bank.
-//       This program is specific for user interface so user may 
-//       access 'companies' client database to view or update
-//       information.
-//         
-**************************************************************/
-
 #include <stdio.h>
 #include <string.h>
 #include "record.h"
@@ -121,7 +99,7 @@ int main(int argc, char* argv[])
 
         readfile(&start, records);
 
-        printf("\nWelcome to Bank 212's Client Database:\n\n");
+        printf("\nClient Database:\n\n");
         printf("\tUse the menu below to add a new client record,\n");
         printf("\tprint all records of existing clients,\n");
         printf("\tfind and view an existing clients record,\n");
@@ -254,7 +232,7 @@ int main(int argc, char* argv[])
             
             cleanup(&start);
 
-            printf("\nThank you for using Bank 212's Client Database!\n");
+            printf("\nThank you for using our Client Database!\n");
             printf("Exiting program...\n\n");
   
         }
