@@ -63,40 +63,30 @@ int main(int argc, char* argv[])
     char records[8] = "records";
 
     if( argc == 1 )
-    {
-        
+    {  
         loop = 1;
         debug = 0;
-   
      }
     
     /* 2 arguments, second must be debug, otherwise error and exit */
 
     else if( argc == 2 && strcmp(argv[1], "debug") == 0 )     
     {
-  
         printf("\n-----------------------*DEBUG MODE ON*---------------------------\n\n");
             
         loop = 1;
         debug = 1;
-     
     }
-
     else
     {
-
         printf("\nCommand line error, unrecognized second argument or too many arguments.\n\n");
 
         loop = 0;
-
     }
   
-
-    /* intro and instructions to user */
-    
+    /* intro and instructions to user */   
     if( loop != 0 )
     {
-
         readfile(&start, records);
 
         printf("\nClient Database:\n\n");
@@ -106,55 +96,37 @@ int main(int argc, char* argv[])
         printf("\tor delete a clients record from the database.\n");
   
         menu();
-  
     }
 
     while( loop != 0 ) /* keeps menu loop running as long as quit not selected */
     {
-
         scanf("%s", input); /* puts users choice into userInput array */
-
-        fgets(trash, 80, stdin); /* clears \n from stdin */ 
+        fgets(trash, 80, stdin); /* clears \n from stdin */       
         
         /* if user enters add, add a new record */
-
         if((strcmp(input, a) == 0)||(strcmp(input, ad) == 0)||(strcmp(input, add) == 0))
         {
-
             printf("\nEnter clients name: ");
-
             fgets(clientName, 25, stdin);
-
             clientName[strlen(clientName)-1] = '\0';
-
             getaddress(clientAddress, 50);
-
             clientAddress[strlen(clientAddress)-1] = '\0';
-
             accountNum = getAccountNum();
-
             added = addRecord(&start, accountNum, clientName, clientAddress);
 
             if( added == -1 )
             {
-
                 printf("\nAccount number already in use, record could not be added.\n");
-
             }
-
             else if( added == 0 )
             {
-
                 printf("\nSuccess! Client's record has been added to the system.\n");
-
             }
 
             menu();
-
         }
 
         /* if user enters printall, print all records */ 
-
         else if((strcmp(input, p) == 0)||(strcmp(input, pr) == 0)||(strcmp(input, pri) == 0)||(strcmp(input, prin) == 0)||(strcmp(input, print) == 0)||(strcmp(input, printa) == 0)||(strcmp(input, printal) == 0)||(strcmp(input, printall) == 0))
         {
             printAllRecords(start);
@@ -163,93 +135,66 @@ int main(int argc, char* argv[])
         }
 
         /* if user enters find, find record based on account number */
-
         else if((strcmp(input, f) == 0)||(strcmp(input, fi) == 0)||(strcmp(input, fin) == 0)||(strcmp(input, find) == 0 ))
-        {
-          
+        {     
             accountNum = getAccountNum();
-
-            found = findRecord(start, accountNum);
-          
+            found = findRecord(start, accountNum);     
             if( found == -1 )
             {
-
                 printf("\nRecord with account number %d could not be found in the system.\n", accountNum);
-
             }
 
             menu();
         }
 
-        /* if user enters delete, delete record based on account number */
-       
+        /* if user enters delete, delete record based on account number */    
         else if((strcmp(input, d) == 0)||(strcmp(input, de) == 0)||(strcmp(input, del) == 0)||(strcmp(input, dele) == 0 )||(strcmp(input, delet) == 0)||(strcmp(input, delete) == 0))
-        {
-        
+        {   
             accountNum = getAccountNum();
-
             deleted = deleteRecord(&start, accountNum);
-
             if( deleted == -1 )
             {
-
                 printf("\nClient's record was not found in the system.\n");
-
             }
-
             else if( deleted == 0 )
             {
-
                 printf("\nSuccess! The record has been deleted from the system.\n");
-
             }
 
             menu();
         }
 
         /* if user enters quit, quit the program */
-
         else if((strcmp(input, q) == 0)||(strcmp(input, qu) == 0)||(strcmp(input, qui) == 0)||(strcmp(input, quit) == 0 ))
         {
-
             loop = 0;
-
             fileWritten = writefile(start, records);
-
+            
             if( fileWritten == -1 )
             {
-
                 printf("There was an error in closing, records may not be saved.\n");
-     
             }
-
             else if( fileWritten == 0 )
             {
-
                 printf("Progress saved!\n");
-
             }
             
             cleanup(&start);
-
             printf("\nThank you for using our Client Database!\n");
             printf("Exiting program...\n\n");
   
         }
         
         /* if user enters none of the above, error and reprompt */
-     
         else
         {
             printf("\n\nI'm sorry that was not a valid option. Please try again.\n\n");
 
             menu();
         }
-
     }
 
     return 0;
-
 }
 
 /*****************************************************************
@@ -277,15 +222,12 @@ void getaddress (char address[], int size)
 
     if (debug == 1)
     {
-
         printf("\n----------*DEBUG* In getaddress function, params: address(%s), size(%d)----------\n", address, size);
-
     }
 
     printf("\nEnter clients address, type ! and Enter when done:\n\n");
    
     /* while loop so user may fill address array until ! */
- 
     while((c != '!') && (i < size))
     {
         c = fgetc(stdin); /*read users character and store in c*/
@@ -294,7 +236,6 @@ void getaddress (char address[], int size)
     }
 
     address[i] = '\0'; /*set last in array to null*/
-
     return;
 }
 
@@ -314,10 +255,8 @@ void getaddress (char address[], int size)
 void menu()
 {
     if (debug == 1)
-    {
-        
-        printf("\n----------*DEBUG* In menu function, params: none----------\n");
-    
+    {       
+        printf("\n----------*DEBUG* In menu function, params: none----------\n");   
     }
 
     printf("\n\nType name of one of the following options and press Enter:\n\n");
@@ -348,10 +287,8 @@ int getAccountNum()
     char buffer[80];  
 
     if (debug == 1)
-    {
-        
+    {      
         printf("\n----------*DEBUG* In getAccountNum function, params: none----------\n");
-   
      }
 
     printf("\nEnter clients account number: ");
