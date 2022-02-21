@@ -1,23 +1,3 @@
-/*****************************************************************
-//
-//  NAME:        Ashley Burnett
-//
-//  HOMEWORK:    Project1
-//
-//  CLASS:       ICS 212
-//
-//  INSTRUCTOR:  Ravi Narayan
-//
-//  DATE:        February 10, 2021
-//
-//  FILE:        database.c
-//
-//  DESCRIPTION:
-//   Will be used to store, access and delete records created 
-//   and manipulated in user_interface.c
-//
-****************************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
